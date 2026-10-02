@@ -92,6 +92,10 @@ flex-direction:column;
 overflow:hidden;
 }
 
+.chat[hidden]{
+display:none;
+}
+
 .chat::before{
 content:"";
 position:absolute;
@@ -282,6 +286,7 @@ border:2px solid #5a2226;
 padding:13px 16px;
 font-size:.7rem;
 box-shadow:0 8px 25px rgba(0,0,0,.55);
+display:block;
 }
 
 .chat-botao:hover{
@@ -297,17 +302,96 @@ color:#fff;
 footer{margin-top:50px;color:#5f584e;font-size:.75rem}
 
 @media(max-width:700px){
+
 .chat{
-right:10px;
-bottom:10px;
-left:10px;
-width:auto;
-height:430px;
+right:8px;
+bottom:8px;
+left:auto;
+width:270px;
+height:350px;
 }
+
+.chat-head{
+padding:9px 10px;
+}
+
+.chat-titulo{
+font-size:.72rem;
+}
+
+.chat-status{
+font-size:.5rem;
+}
+
+.chat-user{
+padding:5px 10px;
+font-size:.55rem;
+}
+
+.chat-mensagens{
+padding:8px;
+}
+
+.msg{
+margin-bottom:8px;
+padding:6px 8px;
+}
+
+.msg-user{
+font-size:.65rem;
+}
+
+.msg-texto{
+font-size:.65rem;
+}
+
+.msg-hora{
+font-size:.45rem;
+}
+
+.chat-form{
+padding:6px;
+gap:5px;
+}
+
+.chat-input{
+height:34px;
+font-size:.65rem;
+padding:8px;
+}
+
+.chat-enviar{
+width:58px;
+font-size:.5rem;
+}
+
+.chat-contador{
+right:68px;
+}
+
 .chat-botao{
-right:10px;
-bottom:10px;
+right:8px;
+bottom:8px;
+padding:9px 11px;
+font-size:.58rem;
 }
+
+}
+
+@media(max-width:400px){
+
+.chat{
+right:7px;
+bottom:7px;
+width:245px;
+height:320px;
+}
+
+.chat-botao{
+right:7px;
+bottom:7px;
+}
+
 }
 
 @media(max-width:560px){
@@ -467,6 +551,7 @@ bottom:10px;
           s.style.animationDelay=(Math.random()*1.1)+'s';
 
           fr.appendChild(s);
+
         });
 
         nd.parentNode.replaceChild(fr,nd);
