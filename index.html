@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ordem Paranormal RPG — Arquivo de Agentes</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Cinzel:wght@800&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+:root{--desk:#0b0909;--paper:#d6cdb8;--paper2:#c4b99f;--ink:#1b1512;--blood:#9c0f17;--blood2:#c9141e;--dim:#8a8173;
+--ruido:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--desk);color:#d9d2c3;font-family:"Special Elite","Courier New",monospace;line-height:1.55;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.5;mix-blend-mode:overlay;background-image:var(--ruido)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:49;background:radial-gradient(circle 430px at var(--mx,50%) var(--my,40%),transparent 0,rgba(0,0,0,.35) 55%,rgba(0,0,0,.8) 100%);animation:luz 7s infinite}
+@keyframes luz{0%,100%{opacity:.9}8%{opacity:1}10%{opacity:.6}12%{opacity:.95}55%{opacity:.85}57%{opacity:1}58%{opacity:.65}}
+.wrap{max-width:1080px;margin:0 auto;padding:18px 20px 70px;position:relative;z-index:1;animation:tremor .35s 1.62s steps(1)}
+@keyframes tremor{0%{transform:translate(0)}20%{transform:translate(-5px,3px)}40%{transform:translate(4px,-3px)}60%{transform:translate(-3px,-2px)}80%{transform:translate(2px,2px)}100%{transform:none}}
+.rec{display:flex;gap:10px;align-items:center;font-size:.74rem;color:var(--dim);letter-spacing:.08em}
+.rec i{width:9px;height:9px;border-radius:50%;background:var(--blood2);animation:rec 1.2s steps(1) infinite}
+@keyframes rec{50%{opacity:0}}
+.rec b{font-weight:400;color:#d9d2c3}
+.cab{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end;border-bottom:3px solid var(--blood);padding:22px 0 18px}
+.orig{font-size:.78rem;color:var(--dim);margin:0 0 6px}
+h1{font-family:"Cinzel",Georgia,serif;font-weight:800;margin:0;font-size:clamp(2.1rem,8vw,4.6rem);line-height:.95;letter-spacing:.04em;text-transform:uppercase;color:#e6dfd0}
+h1 .red{color:var(--blood2);display:inline-block;transform:skewX(-8deg)}
+.l{font-style:normal;display:inline-block;animation:sinal .6s steps(1) both}
+@keyframes sinal{0%{opacity:0}20%{opacity:1}35%{opacity:0}50%{opacity:1}62%{opacity:.15}100%{opacity:1}}
+.l.x{color:var(--blood2);transform:translateY(-2px) skewX(12deg)}
+.carimbo{font-family:"Permanent Marker",cursive;color:var(--blood2);border:4px solid var(--blood2);padding:6px 14px;font-size:1.3rem;opacity:0;animation:bate .22s 1.4s cubic-bezier(.5,0,1,1) forwards;text-transform:uppercase;white-space:nowrap}
+@keyframes bate{from{opacity:0;transform:rotate(-14deg) scale(3)}to{opacity:.92;transform:rotate(-7deg) scale(1)}}
+.nota{max-width:62ch;margin:20px 0 0;color:#bdb5a4}
+.nota.dig::after{content:"";display:inline-block;width:.55em;height:1em;background:#bdb5a4;margin-left:2px;vertical-align:-.15em;animation:rec .8s steps(1) infinite}
+.tarja{position:relative;cursor:help}
+.tarja::before{content:"";position:absolute;inset:0 -3px;background:#000;transform-origin:right;transition:transform .5s cubic-bezier(.7,0,.2,1)}
+.tarja:hover::before,.tarja:focus::before{transform:scaleX(0)}
+.barra{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin:28px 0 22px;animation:liga .5s 2.2s steps(1) both}
+@keyframes liga{0%{opacity:0}25%{opacity:1}40%{opacity:0}60%{opacity:1}75%{opacity:.3}100%{opacity:1}}
+.cont{color:var(--dim);font-size:.9rem}.cont b{color:var(--blood2);font-weight:400;font-size:1.1rem}
+button{font-family:"Cinzel",Georgia,serif;font-weight:800;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;border:0;transition:transform .15s,*background* .2s,color .2s}
+button:focus-visible,.nome:focus-visible{outline:2px solid var(--blood2);outline-offset:3px}
+.novo{background:transparent;color:#d9d2c3;border:2px dashed #5a2226;padding:11px 20px;font-size:.85rem}
+.novo:hover{background:var(--blood);border-style:solid;border-color:var(--blood);color:#fff}
+.convite{background:transparent;color:#d9d2c3;border:2px dashed #5a2226;padding:11px 20px;font-size:.85rem}
+.convite:hover{background:var(--blood);border-style:solid;border-color:var(--blood);color:#fff}
+.sala{color:var(--dim);font-size:.78rem;letter-spacing:.08em}
+.sala b{color:#d9d2c3;font-weight:400}
+.mesa{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:34px 26px}
+.folha{--r:0deg;position:relative;background:linear-gradient(180deg,var(--paper),var(--paper2));color:var(--ink);padding:28px 14px 14px;transform:rotate(var(--r));clip-path:polygon(0 1%,4% 0,96% 1%,100% 0,99% 98%,100% 100%,3% 99%,0 100%);animation:imprime 1.1s steps(16) both;animation-delay:calc(var(--i,0)*.3s + 2.3s);transition:transform .35s}
+.folha.nova{animation-delay:0s}
+@keyframes imprime{from{clip-path:polygon(0 1%,4% 0,96% 1%,100% 0,99% 1%,100% 1%,3% 1%,0 1%)}to{clip-path:polygon(0 1%,4% 0,96% 1%,100% 0,99% 98%,100% 100%,3% 99%,0 100%)}}
+.folha:hover{transform:rotate(calc(var(--r)*.15))}
+.folha::after{content:"";position:absolute;right:0;bottom:0;width:0;height:0;background:linear-gradient(135deg,#ece5d2 0,#b9ae95 50%,var(--desk) 50%);transition:width .3s,height .3s}
+.folha:hover::after{width:30px;height:30px}
+.folha.saindo{-webkit-mask-image:linear-gradient(to bottom,#000 0,#000 33.3%,transparent 40%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0,#000 33.3%,transparent 40%,transparent 100%);-webkit-mask-size:100% 300%;mask-size:100% 300%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;animation:queima .9s ease-in forwards}
+@keyframes queima{0%{-webkit-mask-position:0 0;mask-position:0 0;filter:none}50%{filter:sepia(1) brightness(.55) contrast(1.5)}100%{-webkit-mask-position:0 100%;mask-position:0 100%;filter:sepia(1) brightness(.15)}}
+.fita{position:absolute;top:0;left:50%;width:84px;height:22px;margin-left:-42px;background:rgba(205,195,140,.6);transform:rotate(calc(var(--r)*-2 + 2deg))}
+.nome{width:100%;background:transparent;border:0;border-bottom:1px dashed #6b5d4c;font-family:"Permanent Marker",cursive;font-size:1.15rem;color:var(--ink);padding:0 0 4px;margin-bottom:10px}
+.foto{position:relative;aspect-ratio:3/4;background:#151010;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid #3a2e28}
+.vazio{color:#7d746a;text-align:center;font-size:.8rem;padding:14px}
+.vazio svg{width:38px;height:38px;display:block;margin:0 auto 6px;opacity:.6}
+.foto img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;animation:revela 1.2s steps(7) both}
+@keyframes revela{0%{filter:grayscale(1) contrast(3) brightness(.15)}20%{filter:grayscale(1) contrast(2) brightness(1.9)}40%{filter:grayscale(1) contrast(1.4) brightness(.5)}60%{filter:grayscale(.8) sepia(1) brightness(.9)}80%{filter:sepia(.6) brightness(1.15)}100%{filter:none}}
+.foto.retrato img{animation:polaroide 2.8s ease-in both}
+@keyframes polaroide{0%{filter:brightness(0) sepia(1)}35%{filter:brightness(.3) sepia(1) contrast(.6)}70%{filter:brightness(.8) sepia(.7) contrast(.9)}100%{filter:none}}
+.foto.cheia::after{content:"";position:absolute;inset:0;background:var(--ruido);background-size:160px;pointer-events:none;opacity:0;animation:chuvisco .9s steps(1) 1}
+@keyframes chuvisco{0%{opacity:.95;background-position:0 0}18%{background-position:-60px 40px}36%{opacity:.7;background-position:50px -70px}54%{opacity:.5;background-position:-30px -10px}72%{opacity:.25;background-position:70px 30px}100%{opacity:0}}
+.topo{display:flex;gap:12px;align-items:flex-end;margin-bottom:12px}
+.retrato{width:92px;flex:none;border:2px solid #f1ebdc;outline:1px solid #3a2e28;box-shadow:0 3px 6px rgba(0,0,0,.45)}
+.retrato .vazio{font-size:.6rem;padding:6px;line-height:1.25}
+.retrato .vazio svg{width:24px;height:24px;margin-bottom:3px}
+.lado{flex:1;min-width:0}
+.lado .nome{margin-bottom:8px}
+.bfoto{width:100%;background:transparent;color:var(--blood);border:2px solid var(--blood);padding:7px 6px;font-size:.66rem}
+.bfoto:hover{background:var(--blood);color:#fff}
+.rod{display:flex;gap:8px;margin-top:12px}
+.mostrar{flex:1;background:var(--blood);color:#fff;padding:11px 8px;font-size:.78rem}
+.mostrar:hover{background:var(--blood2)}
+.x{background:transparent;color:#5c4f43;font-size:1.2rem;padding:0 10px;border:1px solid #8b7e6c}
+.x:hover{color:#fff;background:#222}
+.aviso{min-height:1.2em;font-size:.72rem;color:var(--blood);margin-top:6px}
+.selo{position:absolute;right:16px;bottom:70px;font-family:"Permanent Marker",cursive;color:var(--blood);border:3px solid var(--blood);padding:2px 10px;font-size:1.05rem;text-transform:uppercase;opacity:0;pointer-events:none;mix-blend-mode:multiply}
+.selo.bate{animation:selo .2s 1s cubic-bezier(.5,0,1,1) forwards}
+@keyframes selo{from{opacity:0;transform:rotate(-16deg) scale(2.8)}to{opacity:.85;transform:rotate(-9deg) scale(1)}}
+.lb{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:20px;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:92vh;border:2px solid var(--blood)}
+.lb.on img{animation:foco .5s steps(5)}
+@keyframes foco{from{filter:blur(14px) brightness(2)}to{filter:none}}
+footer{margin-top:50px;color:#5f584e;font-size:.75rem}
+@media(max-width:560px){.cab{grid-template-columns:1fr}.carimbo{justify-self:start}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="rec"><i></i><span>REC <b id="tc">03:17:42</b></span><span>CAM 03 · SALA DE ARQUIVOS</span></div>
+
+  <div class="cab">
+    <div>
+      <p class="orig">ORDO REALITAS / ARQUIVO DE CAMPO</p>
+      <h1 id="tit" aria-label="Ordem Paranormal">Ordem<br><span class="red">Paranormal</span></h1>
+    </div>
+    <div class="carimbo">Confidencial</div>
+  </div>
+
+  <p class="nota" id="nota">Cada agente tem sua pasta. Anexe a ficha de cada um abaixo. Quem for visto sem autorização será <span class="tarja" tabindex="0">removido dos registros</span>, e o que o Outro Lado leva <span class="tarja" tabindex="0">nunca volta</span>.</p>
+
+  <div class="barra">
+    <div>
+      <div class="cont">Agentes registrados: <b id="cont">0</b></div>
+      <div class="sala">SALA: <b id="codigoSala">...</b></div>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="convite" id="convite" type="button">Convidar</button>
+      <button class="novo" id="novo" type="button">+ Novo espaço</button>
+    </div>
+  </div>
+
+  <main class="mesa" id="mesa"></main>
+
+  <footer>Ordem Paranormal RPG · site de fã, sem fins lucrativos. As imagens compartilhadas ficam armazenadas online.</footer>
+</div>
+
+<div class="lb" id="lb"><img alt="Imagem ampliada"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+<script>
+(function(){
+
+  var firebaseConfig={
+    apiKey:"AIzaSyDVK_bXqWr_IpWSAa__fnRgG-rFz1MUsiw",
+    authDomain:"teste1-32b84.firebaseapp.com",
+    projectId:"teste1-32b84",
+    storageBucket:"teste1-32b84.firebasestorage.app",
+    messagingSenderId:"594714086800",
+    appId:"1:594714086800:web:6858f1dcbefb98c379f715",
+    measurementId:"G-H4DGEPGF7W"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+
+  var db=firebase.firestore();
+
+  var calmo=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var mesa=document.getElementById('mesa');
+  var cont=document.getElementById('cont');
+  var lb=document.getElementById('lb');
+  var lbi=lb.querySelector('img');
+  var codigoSala=document.getElementById('codigoSala');
+  var convite=document.getElementById('convite');
+
+  var n=0;
+  var MAX=24;
+  var rots=[-2,1.5,-1,2,-1.8,1,-.5,2.2];
+
+  var ico='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18"/><circle cx="9" cy="9" r="1.8"/><path d="M21 16l-5-5-8 8"/></svg>';
+
+  function gerarSala(){
+    var letras='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    var s='';
+
+    for(var i=0;i<6;i++){
+      s+=letras[Math.floor(Math.random()*letras.length)];
+    }
+
+    return s;
+  }
+
+  function obterSala(){
+    var p=new URLSearchParams(location.search);
+    var sala=p.get('sala');
+
+    if(sala&&/^[A-Za-z0-9]{6,20}$/.test(sala)){
+      return sala.toUpperCase();
+    }
+
+    var nova=gerarSala();
+
+    history.replaceState(null,'',location.pathname+'?sala='+nova);
+
+    return nova;
+  }
+
+  var sala=obterSala();
+
+  codigoSala.textContent=sala;
+
+  var agentesRef=db.collection('salas').doc(sala).collection('agentes');
+
+  function total(){
+    cont.textContent=mesa.children.length;
+  }
+
+  var tit=document.getElementById('tit');
+
+  (function letras(el){
+    [].slice.call(el.childNodes).forEach(function(nd){
+
+      if(nd.nodeType===3){
+
+        var fr=document.createDocumentFragment();
+
+        nd.textContent.split('').forEach(function(c){
+          var s=document.createElement('i');
+
+          s.className='l';
+          s.textContent=c;
+          s.style.animationDelay=(Math.random()*1.1)+'s';
+
+          fr.appendChild(s);
+        });
+
+        nd.parentNode.replaceChild(fr,nd);
+
+      }else if(nd.nodeType===1&&nd.tagName!=='BR'){
+
+        letras(nd);
+
+      }
+
+    });
+  })(tit);
+
+  if(!calmo){
+
+    var ls=tit.querySelectorAll('.l');
+    var gl='█▓?#Ø†∅';
+
+    (function falha(){
+
+      setTimeout(function(){
+
+        if(!document.hidden){
+
+          var l=ls[Math.floor(Math.random()*ls.length)];
+          var o=l.textContent;
+          var k=0;
+
+          (function f(){
+
+            if(k++<4){
+
+              l.textContent=k%2?gl[Math.floor(Math.random()*gl.length)]:o;
+              l.classList.toggle('x',k%2===1);
+
+              setTimeout(f,70);
+
+            }else{
+
+              l.textContent=o;
+              l.classList.remove('x');
+
+            }
+
+          })();
+
+        }
+
+        falha();
+
+      },3500+Math.random()*3500);
+
+    })();
+
+  }
+
+  var nota=document.getElementById('nota');
+
+  if(!calmo){
+
+    nota.style.minHeight=nota.offsetHeight+'px';
+
+    var nos=[];
+    var w=document.createTreeWalker(nota,NodeFilter.SHOW_TEXT);
+    var t;
+
+    while(t=w.nextNode()){
+      nos.push({n:t,s:t.textContent});
+    }
+
+    nos.forEach(function(o){
+      o.n.textContent='';
+    });
+
+    nota.classList.add('dig');
+
+    setTimeout(function(){
+
+      var i=0;
+      var j=0;
+
+      (function tipo(){
+
+        if(i>=nos.length){
+
+          nota.classList.remove('dig');
+          return;
+
+        }
+
+        var o=nos[i];
+
+        o.n.textContent=o.s.slice(0,++j);
+
+        if(j>=o.s.length){
+
+          i++;
+          j=0;
+
+        }
+
+        setTimeout(tipo,16+Math.random()*30);
+
+      })();
+
+    },1900);
+
+  }
+
+  var tc=document.getElementById('tc');
+  var base=3*3600+17*60+42;
+  var t0=Date.now();
+
+  function p(x){
+    return(x<10?'0':'')+x;
+  }
+
+  setInterval(function(){
+
+    var s=base+Math.floor((Date.now()-t0)/1000);
+
+    tc.textContent=
+      p(Math.floor(s/3600)%24)+':' +
+      p(Math.floor(s/60)%60)+':' +
+      p(s%60);
+
+  },1000);
+
+  if(!calmo){
+
+    var root=document.documentElement;
+    var mx=innerWidth/2;
+    var my=innerHeight*.4;
+    var tx=mx;
+    var ty=my;
+    var rodando=false;
+
+    function passo(){
+
+      mx+=(tx-mx)*.12;
+      my+=(ty-my)*.12;
+
+      root.style.setProperty('--mx',mx+'px');
+      root.style.setProperty('--my',my+'px');
+
+      if(Math.abs(tx-mx)>.5||Math.abs(ty-my)>.5){
+
+        requestAnimationFrame(passo);
+
+      }else{
+
+        rodando=false;
+
+      }
+
+    }
+
+    function mover(e){
+
+      tx=e.clientX;
+      ty=e.clientY;
+
+      if(!rodando){
+
+        rodando=true;
+        requestAnimationFrame(passo);
+
+      }
+
+    }
+
+    addEventListener('pointermove',mover);
+    addEventListener('pointerdown',mover);
+
+  }
+
+  function criarLocal(id,dados,nova){
+
+    if(document.querySelector('[data-id="'+id+'"]'))return;
+
+    if(mesa.children.length>=MAX)return;
+
+    n++;
+
+    var f=document.createElement('article');
+
+    f.className='folha'+(nova?' nova':'');
+    f.dataset.id=id;
+    f.style.setProperty('--r',rots[n%rots.length]+'deg');
+    f.style.setProperty('--i',mesa.children.length);
+
+    f.innerHTML=
+      '<span class="fita"></span>' +
+
+      '<div class="topo">' +
+        '<div class="foto retrato">' +
+          '<div class="vazio">'+ico+'Foto 3x4</div>' +
+        '</div>' +
+
+        '<div class="lado">' +
+          '<input class="nome" maxlength="22" value="'+(dados.nome||('Agente '+String(n).padStart(2,'0'))) +'" aria-label="Nome do agente">' +
+          '<button type="button" class="bfoto">Anexar foto</button>' +
+          '<div class="aviso"></div>' +
+        '</div>' +
+
+      '</div>' +
+
+      '<div class="foto">' +
+        '<div class="vazio">'+ico+'Sem ficha anexada</div>' +
+      '</div>' +
+
+      '<div class="rod">' +
+        '<button type="button" class="mostrar">Mostrar ficha</button>' +
+        '<button type="button" class="x" title="Remover espaço" aria-label="Remover espaço">×</button>' +
+      '</div>' +
+
+      '<div class="aviso"></div>' +
+      '<span class="selo">Arquivado</span>';
+
+    var nome=f.querySelector('.nome');
+    var caixas=f.querySelectorAll('.foto');
+    var avs=f.querySelectorAll('.aviso');
+    var selo=f.querySelector('.selo');
+
+    function exibirImagem(box,url,rotulo){
+
+      if(!url)return;
+
+      var im=new Image();
+
+      im.alt=rotulo+' de '+nome.value;
+      im.src=url;
+
+      im.onclick=function(){
+
+        lbi.src=url;
+        lb.classList.add('on');
+
+      };
+
+      box.innerHTML='';
+      box.appendChild(im);
+
+      box.classList.remove('cheia');
+
+      void box.offsetWidth;
+
+      box.classList.add('cheia');
+
+    }
+
+    if(dados.foto){
+      exibirImagem(caixas[0],dados.foto,'Foto');
+    }
+
+    if(dados.ficha){
+      exibirImagem(caixas[1],dados.ficha,'Ficha');
+    }
+
+    function salvarNome(){
+
+      agentesRef.doc(id).set({
+        nome:nome.value,
+        atualizado:firebase.firestore.FieldValue.serverTimestamp()
+      },{merge:true}).catch(function(){
+
+        avs[1].textContent='Não foi possível salvar.';
+
+      });
+
+    }
+
+    nome.addEventListener('change',salvarNome);
+    nome.addEventListener('blur',salvarNome);
+
+    function ligar(box,btn,av,campo,troca,rotulo,arquiva){
+
+      var inp=document.createElement('input');
+
+      inp.type='file';
+      inp.accept='image/*';
+      inp.hidden=true;
+
+      document.body.appendChild(inp);
+
+      btn.onclick=function(){
+        inp.click();
+      };
+
+      inp.onchange=async function(){
+
+        var arquivo=inp.files&&inp.files[0];
+
+        if(!arquivo)return;
+
+        if(!arquivo.type||arquivo.type.indexOf('image/')!==0){
+
+          av.textContent='Recusado: só imagens são aceitas.';
+          inp.value='';
+
+          return;
+
+        }
+
+        if(arquivo.size>10*1024*1024){
+
+          av.textContent='Imagem muito grande. Máximo: 10 MB.';
+          inp.value='';
+
+          return;
+
+        }
+
+        av.textContent='Enviando...';
+        btn.disabled=true;
+
+        try{
+
+          var dadosUpload=new FormData();
+
+          dadosUpload.append('file',arquivo);
+          dadosUpload.append('upload_preset','Teste1');
+
+          var resposta=await fetch(
+            'https://api.cloudinary.com/v1_1/fdjhznyl/image/upload',
+            {
+              method:'POST',
+              body:dadosUpload
+            }
+          );
+
+          var resultado=await resposta.json();
+
+          if(!resposta.ok||!resultado.secure_url){
+
+            throw new Error(
+              resultado.error&&resultado.error.message
+              ?resultado.error.message
+              :'Falha no upload'
+            );
+
+          }
+
+          var url=resultado.secure_url;
+
+          await agentesRef.doc(id).set({
+
+            [campo]:url,
+            nome:nome.value,
+            atualizado:firebase.firestore.FieldValue.serverTimestamp()
+
+          },{merge:true});
+
+          exibirImagem(box,url,rotulo);
+
+          btn.textContent=troca;
+          av.textContent='';
+
+          if(arquiva){
+
+            selo.classList.remove('bate');
+
+            void selo.offsetWidth;
+
+            selo.classList.add('bate');
+
+          }
+
+        }catch(e){
+
+          av.textContent='Erro ao enviar imagem.';
+
+        }
+
+        btn.disabled=false;
+        inp.value='';
+
+      };
+
+    }
+
+    ligar(
+      caixas[0],
+      f.querySelector('.bfoto'),
+      avs[0],
+      'foto',
+      'Trocar foto',
+      'Foto',
+      false
+    );
+
+    ligar(
+      caixas[1],
+      f.querySelector('.mostrar'),
+      avs[1],
+      'ficha',
+      'Trocar ficha',
+      'Ficha',
+      true
+    );
+
+    f.querySelector('.x').onclick=function(){
+
+      if(!confirm('Remover este espaço da sala?'))return;
+
+      f.classList.add('saindo');
+
+      setTimeout(function(){
+
+        agentesRef.doc(id).delete().catch(function(){});
+
+      },500);
+
+    };
+
+    mesa.appendChild(f);
+
+    total();
+
+  }
+
+  function limparMesa(){
+
+    mesa.innerHTML='';
+    total();
+
+  }
+
+  agentesRef.orderBy('criado').onSnapshot(function(snapshot){
+
+    limparMesa();
+
+    snapshot.forEach(function(doc){
+
+      criarLocal(
+        doc.id,
+        doc.data(),
+        false
+      );
+
+    });
+
+    if(snapshot.empty){
+
+      agentesRef.add({
+
+        nome:'Agente 01',
+        criado:firebase.firestore.FieldValue.serverTimestamp(),
+        atualizado:firebase.firestore.FieldValue.serverTimestamp()
+
+      }).catch(function(){});
+
+    }
+
+  },function(){
+
+    document.getElementById('cont').textContent='ERRO';
+
+  });
+
+  document.getElementById('novo').onclick=function(){
+
+    if(mesa.children.length>=MAX)return;
+
+    agentesRef.add({
+
+      nome:'Agente '+String(mesa.children.length+1).padStart(2,'0'),
+      criado:firebase.firestore.FieldValue.serverTimestamp(),
+      atualizado:firebase.firestore.FieldValue.serverTimestamp()
+
+    }).then(function(){
+
+      setTimeout(function(){
+
+        var u=mesa.lastElementChild;
+
+        if(u){
+
+          u.scrollIntoView({
+            behavior:'smooth',
+            block:'center'
+          });
+
+        }
+
+      },300);
+
+    });
+
+  };
+
+  convite.onclick=function(){
+
+    var url=location.href;
+    var antigo=convite.textContent;
+
+    function sucesso(){
+
+      convite.textContent='Link copiado';
+
+      setTimeout(function(){
+
+        convite.textContent=antigo;
+
+      },1800);
+
+    }
+
+    function fallback(){
+
+      var area=document.createElement('textarea');
+
+      area.value=url;
+      area.style.position='fixed';
+      area.style.left='-9999px';
+
+      document.body.appendChild(area);
+
+      area.focus();
+      area.select();
+
+      try{
+
+        document.execCommand('copy');
+        sucesso();
+
+      }catch(e){
+
+        prompt('Copie o link da sala:',url);
+
+      }
+
+      document.body.removeChild(area);
+
+    }
+
+    if(navigator.clipboard&&window.isSecureContext){
+
+      navigator.clipboard.writeText(url)
+        .then(sucesso)
+        .catch(fallback);
+
+    }else{
+
+      fallback();
+
+    }
+
+  };
+
+  lb.onclick=function(){
+
+    lb.classList.remove('on');
+
+  };
+
+  document.addEventListener('keydown',function(e){
+
+    if(e.key==='Escape'){
+      lb.classList.remove('on');
+    }
+
+  });
+
+})();
+</script>
+
+</body>
+</html>
