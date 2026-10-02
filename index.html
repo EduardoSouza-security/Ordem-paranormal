@@ -39,11 +39,9 @@ h1 .red{color:var(--blood2);display:inline-block;transform:skewX(-8deg)}
 @keyframes liga{0%{opacity:0}25%{opacity:1}40%{opacity:0}60%{opacity:1}75%{opacity:.3}100%{opacity:1}}
 .cont{color:var(--dim);font-size:.9rem}.cont b{color:var(--blood2);font-weight:400;font-size:1.1rem}
 button{font-family:"Cinzel",Georgia,serif;font-weight:800;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;border:0;transition:transform .15s,*background* .2s,color .2s}
-button:focus-visible,.nome:focus-visible{outline:2px solid var(--blood2);outline-offset:3px}
-.novo{background:transparent;color:#d9d2c3;border:2px dashed #5a2226;padding:11px 20px;font-size:.85rem}
-.novo:hover{background:var(--blood);border-style:solid;border-color:var(--blood);color:#fff}
-.convite{background:transparent;color:#d9d2c3;border:2px dashed #5a2226;padding:11px 20px;font-size:.85rem}
-.convite:hover{background:var(--blood);border-style:solid;border-color:var(--blood);color:#fff}
+button:focus-visible,.nome:focus-visible,.chat-input:focus-visible{outline:2px solid var(--blood2);outline-offset:3px}
+.novo,.convite{background:transparent;color:#d9d2c3;border:2px dashed #5a2226;padding:11px 20px;font-size:.85rem}
+.novo:hover,.convite:hover{background:var(--blood);border-style:solid;border-color:var(--blood);color:#fff}
 .sala{color:var(--dim);font-size:.78rem;letter-spacing:.08em}
 .sala b{color:#d9d2c3;font-weight:400}
 .mesa{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:34px 26px}
@@ -61,7 +59,6 @@ button:focus-visible,.nome:focus-visible{outline:2px solid var(--blood2);outline
 .vazio{color:#7d746a;text-align:center;font-size:.8rem;padding:14px}
 .vazio svg{width:38px;height:38px;display:block;margin:0 auto 6px;opacity:.6}
 .foto img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
-.foto.cheia::after{display:none}
 .topo{display:flex;gap:12px;align-items:flex-end;margin-bottom:12px}
 .retrato{width:92px;flex:none;border:2px solid #f1ebdc;outline:1px solid #3a2e28;box-shadow:0 3px 6px rgba(0,0,0,.45)}
 .retrato .vazio{font-size:.6rem;padding:6px;line-height:1.25}
@@ -79,14 +76,248 @@ button:focus-visible,.nome:focus-visible{outline:2px solid var(--blood2);outline
 .selo{position:absolute;right:16px;bottom:70px;font-family:"Permanent Marker",cursive;color:var(--blood);border:3px solid var(--blood);padding:2px 10px;font-size:1.05rem;text-transform:uppercase;opacity:0;pointer-events:none;mix-blend-mode:multiply}
 .selo.bate{animation:selo .2s 1s cubic-bezier(.5,0,1,1) forwards}
 @keyframes selo{from{opacity:0;transform:rotate(-16deg) scale(2.8)}to{opacity:.85;transform:rotate(-9deg) scale(1)}}
+
+.chat{
+position:fixed;
+right:20px;
+bottom:20px;
+width:340px;
+height:460px;
+z-index:55;
+background:rgba(12,9,9,.97);
+border:2px solid #5a2226;
+box-shadow:0 15px 45px rgba(0,0,0,.7),0 0 0 1px rgba(156,15,23,.15);
+display:flex;
+flex-direction:column;
+overflow:hidden;
+}
+
+.chat::before{
+content:"";
+position:absolute;
+inset:0;
+pointer-events:none;
+background-image:var(--ruido);
+opacity:.06;
+}
+
+.chat-head{
+position:relative;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:13px 14px;
+border-bottom:2px solid var(--blood);
+background:linear-gradient(90deg,#160b0c,#0d0909);
+}
+
+.chat-titulo{
+font-family:"Cinzel",Georgia,serif;
+font-size:.86rem;
+letter-spacing:.12em;
+color:#e6dfd0;
+}
+
+.chat-status{
+display:flex;
+align-items:center;
+gap:7px;
+font-size:.6rem;
+color:#82796c;
+letter-spacing:.08em;
+}
+
+.chat-status i{
+width:7px;
+height:7px;
+border-radius:50%;
+background:var(--blood2);
+animation:rec 1.2s steps(1) infinite;
+}
+
+.chat-fechar{
+background:transparent;
+color:#756b5f;
+font-family:"Special Elite","Courier New",monospace;
+font-size:1rem;
+padding:0 4px;
+letter-spacing:0;
+}
+
+.chat-fechar:hover{
+color:#fff;
+background:transparent;
+}
+
+.chat-user{
+position:relative;
+padding:7px 14px;
+font-size:.65rem;
+color:#81786c;
+border-bottom:1px solid #29201d;
+}
+
+.chat-user b{
+color:var(--blood2);
+font-weight:400;
+}
+
+.chat-mensagens{
+position:relative;
+flex:1;
+overflow-y:auto;
+padding:12px;
+scroll-behavior:smooth;
+}
+
+.chat-mensagens::-webkit-scrollbar{
+width:5px;
+}
+
+.chat-mensagens::-webkit-scrollbar-track{
+background:#0c0909;
+}
+
+.chat-mensagens::-webkit-scrollbar-thumb{
+background:#4b2023;
+}
+
+.chat-vazio{
+color:#625a50;
+font-size:.68rem;
+text-align:center;
+padding:30px 15px;
+}
+
+.msg{
+margin-bottom:12px;
+padding:8px 10px;
+border-left:2px solid #3d2825;
+background:rgba(27,21,18,.65);
+word-break:break-word;
+}
+
+.msg.eu{
+border-left-color:var(--blood2);
+background:rgba(90,15,20,.12);
+}
+
+.msg-user{
+font-family:"Permanent Marker",cursive;
+font-size:.75rem;
+color:var(--blood2);
+margin-bottom:2px;
+}
+
+.msg-texto{
+font-size:.75rem;
+color:#cfc7b8;
+line-height:1.4;
+white-space:pre-wrap;
+}
+
+.msg-hora{
+font-size:.52rem;
+color:#655d53;
+margin-top:4px;
+text-align:right;
+}
+
+.chat-form{
+position:relative;
+display:flex;
+border-top:1px solid #382321;
+background:#0d0909;
+padding:9px;
+gap:7px;
+}
+
+.chat-input{
+flex:1;
+min-width:0;
+resize:none;
+height:38px;
+background:#171110;
+border:1px solid #45302d;
+color:#d9d2c3;
+font-family:"Special Elite","Courier New",monospace;
+font-size:.72rem;
+padding:10px;
+outline:none;
+}
+
+.chat-input:focus{
+border-color:var(--blood);
+}
+
+.chat-enviar{
+width:72px;
+background:var(--blood);
+color:#fff;
+font-size:.6rem;
+padding:5px;
+letter-spacing:.08em;
+}
+
+.chat-enviar:hover{
+background:var(--blood2);
+}
+
+.chat-contador{
+position:absolute;
+right:87px;
+bottom:3px;
+font-size:.45rem;
+color:#4e4640;
+}
+
+.chat-botao{
+position:fixed;
+right:20px;
+bottom:20px;
+z-index:54;
+background:#100a0a;
+color:#d9d2c3;
+border:2px solid #5a2226;
+padding:13px 16px;
+font-size:.7rem;
+box-shadow:0 8px 25px rgba(0,0,0,.55);
+}
+
+.chat-botao:hover{
+background:var(--blood);
+color:#fff;
+}
+
 .lb{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:20px;cursor:zoom-out}
 .lb.on{display:flex}
 .lb img{max-width:100%;max-height:92vh;border:2px solid var(--blood)}
 .lb.on img{animation:foco .5s steps(5)}
 @keyframes foco{from{filter:blur(14px) brightness(2)}to{filter:none}}
 footer{margin-top:50px;color:#5f584e;font-size:.75rem}
-@media(max-width:560px){.cab{grid-template-columns:1fr}.carimbo{justify-self:start}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition:none!important}}
+
+@media(max-width:700px){
+.chat{
+right:10px;
+bottom:10px;
+left:10px;
+width:auto;
+height:430px;
+}
+.chat-botao{
+right:10px;
+bottom:10px;
+}
+}
+
+@media(max-width:560px){
+.cab{grid-template-columns:1fr}
+.carimbo{justify-self:start}
+}
+
+@media(prefers-reduced-motion:reduce){
+*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition:none!important}
+}
 </style>
 </head>
 <body>
@@ -120,6 +351,30 @@ footer{margin-top:50px;color:#5f584e;font-size:.75rem}
 
   <footer>Ordem Paranormal RPG · site de fã, sem fins lucrativos. As imagens compartilhadas ficam armazenadas online.</footer>
 </div>
+
+<button class="chat-botao" id="abrirChat" type="button">☷ COMUNICAÇÕES</button>
+
+<section class="chat" id="chat" hidden>
+  <div class="chat-head">
+    <div>
+      <div class="chat-titulo">COMUNICAÇÕES</div>
+      <div class="chat-status"><i></i> CANAL DA SALA</div>
+    </div>
+    <button class="chat-fechar" id="fecharChat" type="button">×</button>
+  </div>
+
+  <div class="chat-user">IDENTIFICAÇÃO: <b id="chatUser">...</b></div>
+
+  <div class="chat-mensagens" id="chatMensagens">
+    <div class="chat-vazio" id="chatVazio">Nenhuma comunicação registrada.</div>
+  </div>
+
+  <form class="chat-form" id="chatForm">
+    <textarea class="chat-input" id="chatInput" maxlength="500" placeholder="Registrar comunicação..." autocomplete="off"></textarea>
+    <button class="chat-enviar" type="submit">ENVIAR</button>
+    <span class="chat-contador" id="chatContador">0/500</span>
+  </form>
+</section>
 
 <div class="lb" id="lb"><img alt="Imagem ampliada"></div>
 
@@ -187,7 +442,9 @@ footer{margin-top:50px;color:#5f584e;font-size:.75rem}
 
   codigoSala.textContent=sala;
 
-  var agentesRef=db.collection('salas').doc(sala).collection('agentes');
+  var salaRef=db.collection('salas').doc(sala);
+  var agentesRef=salaRef.collection('agentes');
+  var chatRef=salaRef.collection('chat');
 
   function total(){
     cont.textContent=mesa.children.length;
@@ -454,7 +711,6 @@ footer{margin-top:50px;color:#5f584e;font-size:.75rem}
 
       box.innerHTML='';
       box.appendChild(im);
-      box.classList.remove('cheia');
 
     }
 
@@ -705,16 +961,10 @@ footer{margin-top:50px;color:#5f584e;font-size:.75rem}
 
   }
 
-  function limparMesa(){
-
-    mesa.innerHTML='';
-    total();
-
-  }
-
   agentesRef.orderBy('criado').onSnapshot(function(snapshot){
 
-    limparMesa();
+    mesa.innerHTML='';
+    n=0;
 
     snapshot.forEach(function(doc){
 
@@ -834,6 +1084,216 @@ footer{margin-top:50px;color:#5f584e;font-size:.75rem}
 
   };
 
+  var abrirChat=document.getElementById('abrirChat');
+  var fecharChat=document.getElementById('fecharChat');
+  var chat=document.getElementById('chat');
+  var chatUser=document.getElementById('chatUser');
+  var chatMensagens=document.getElementById('chatMensagens');
+  var chatVazio=document.getElementById('chatVazio');
+  var chatForm=document.getElementById('chatForm');
+  var chatInput=document.getElementById('chatInput');
+  var chatContador=document.getElementById('chatContador');
+
+  var usuarioKey='ordem_usuario_'+sala;
+  var usuarioLocal=localStorage.getItem(usuarioKey);
+
+  function identificarUsuario(){
+
+    if(usuarioLocal){
+
+      chatUser.textContent=usuarioLocal;
+      return;
+
+    }
+
+    var ref=salaRef;
+
+    return db.runTransaction(function(transaction){
+
+      return transaction.get(ref).then(function(doc){
+
+        var dados=doc.exists?doc.data():{};
+        var proximo=Number(dados.proximoUsuario||0)+1;
+
+        transaction.set(ref,{
+          proximoUsuario:proximo
+        },{merge:true});
+
+        return proximo;
+
+      });
+
+    }).then(function(numero){
+
+      usuarioLocal='USER '+String(numero).padStart(2,'0');
+
+      localStorage.setItem(usuarioKey,usuarioLocal);
+
+      chatUser.textContent=usuarioLocal;
+
+    }).catch(function(){
+
+      usuarioLocal='USER ?';
+      chatUser.textContent=usuarioLocal;
+
+    });
+
+  }
+
+  identificarUsuario();
+
+  abrirChat.onclick=function(){
+
+    chat.hidden=false;
+    abrirChat.style.display='none';
+
+    setTimeout(function(){
+      chatInput.focus();
+    },100);
+
+  };
+
+  fecharChat.onclick=function(){
+
+    chat.hidden=true;
+    abrirChat.style.display='block';
+
+  };
+
+  chatInput.addEventListener('input',function(){
+
+    chatContador.textContent=chatInput.value.length+'/500';
+
+  });
+
+  chatInput.addEventListener('keydown',function(e){
+
+    if(e.key==='Enter'&&!e.shiftKey){
+
+      e.preventDefault();
+      chatForm.requestSubmit();
+
+    }
+
+  });
+
+  function escapar(texto){
+
+    return String(texto)
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;')
+      .replace(/'/g,'&#039;');
+
+  }
+
+  function horario(timestamp){
+
+    if(!timestamp)return'--:--';
+
+    var data=timestamp.toDate();
+
+    return p(data.getHours())+':'+p(data.getMinutes());
+
+  }
+
+  function adicionarMensagem(doc){
+
+    var dados=doc.data();
+
+    var div=document.createElement('div');
+
+    div.className='msg'+(dados.usuario===usuarioLocal?' eu':'');
+    div.dataset.id=doc.id;
+
+    div.innerHTML=
+      '<div class="msg-user">'+escapar(dados.usuario||'USER ??')+'</div>'+
+      '<div class="msg-texto">'+escapar(dados.texto||'')+'</div>'+
+      '<div class="msg-hora">'+horario(dados.criado)+'</div>';
+
+    chatMensagens.appendChild(div);
+
+  }
+
+  chatRef.orderBy('criado').limitToLast(100).onSnapshot(function(snapshot){
+
+    var antigo=chatMensagens.querySelectorAll('.msg');
+
+    antigo.forEach(function(el){
+      el.remove();
+    });
+
+    snapshot.forEach(function(doc){
+
+      adicionarMensagem(doc);
+
+    });
+
+    if(snapshot.empty){
+
+      chatVazio.style.display='block';
+
+    }else{
+
+      chatVazio.style.display='none';
+
+      requestAnimationFrame(function(){
+
+        chatMensagens.scrollTop=chatMensagens.scrollHeight;
+
+      });
+
+    }
+
+  });
+
+  chatForm.onsubmit=function(e){
+
+    e.preventDefault();
+
+    var texto=chatInput.value.trim();
+
+    if(!texto||texto.length>500)return;
+
+    if(!usuarioLocal||usuarioLocal==='USER ?'){
+
+      identificarUsuario().then(function(){
+
+        chatForm.requestSubmit();
+
+      });
+
+      return;
+
+    }
+
+    chatInput.disabled=true;
+
+    chatRef.add({
+
+      usuario:usuarioLocal,
+      texto:texto,
+      criado:firebase.firestore.FieldValue.serverTimestamp()
+
+    }).then(function(){
+
+      chatInput.value='';
+      chatContador.textContent='0/500';
+      chatInput.focus();
+
+    }).catch(function(){
+
+      alert('Não foi possível enviar a comunicação.');
+
+    }).finally(function(){
+
+      chatInput.disabled=false;
+
+    });
+
+  };
+
   lb.onclick=function(){
 
     lb.classList.remove('on');
@@ -843,7 +1303,16 @@ footer{margin-top:50px;color:#5f584e;font-size:.75rem}
   document.addEventListener('keydown',function(e){
 
     if(e.key==='Escape'){
+
       lb.classList.remove('on');
+
+      if(!chat.hidden){
+
+        chat.hidden=true;
+        abrirChat.style.display='block';
+
+      }
+
     }
 
   });
