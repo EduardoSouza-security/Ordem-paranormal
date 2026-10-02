@@ -140,7 +140,7 @@ background:transparent;
 color:#756b5f;
 font-family:"Special Elite","Courier New",monospace;
 font-size:1rem;
-padding:0 4px;
+padding:0 5px;
 letter-spacing:0;
 }
 
@@ -282,6 +282,7 @@ border:2px solid #5a2226;
 padding:13px 16px;
 font-size:.7rem;
 box-shadow:0 8px 25px rgba(0,0,0,.55);
+display:none;
 }
 
 .chat-botao:hover{
@@ -354,13 +355,16 @@ bottom:10px;
 
 <button class="chat-botao" id="abrirChat" type="button">☷ COMUNICAÇÕES</button>
 
-<section class="chat" id="chat" hidden>
+<section class="chat" id="chat">
   <div class="chat-head">
     <div>
       <div class="chat-titulo">COMUNICAÇÕES</div>
       <div class="chat-status"><i></i> CANAL DA SALA</div>
     </div>
-    <button class="chat-fechar" id="fecharChat" type="button">×</button>
+    <div style="display:flex;gap:6px">
+      <button class="chat-fechar" id="minimizarChat" type="button">—</button>
+      <button class="chat-fechar" id="fecharChat" type="button">×</button>
+    </div>
   </div>
 
   <div class="chat-user">IDENTIFICAÇÃO: <b id="chatUser">...</b></div>
@@ -1085,6 +1089,7 @@ bottom:10px;
   };
 
   var abrirChat=document.getElementById('abrirChat');
+  var minimizarChat=document.getElementById('minimizarChat');
   var fecharChat=document.getElementById('fecharChat');
   var chat=document.getElementById('chat');
   var chatUser=document.getElementById('chatUser');
@@ -1102,20 +1107,18 @@ bottom:10px;
     if(usuarioLocal){
 
       chatUser.textContent=usuarioLocal;
-      return;
+      return Promise.resolve();
 
     }
 
-    var ref=salaRef;
-
     return db.runTransaction(function(transaction){
 
-      return transaction.get(ref).then(function(doc){
+      return transaction.get(salaRef).then(function(doc){
 
         var dados=doc.exists?doc.data():{};
         var proximo=Number(dados.proximoUsuario||0)+1;
 
-        transaction.set(ref,{
+        transaction.set(salaRef,{
           proximoUsuario:proximo
         },{merge:true});
 
@@ -1141,6 +1144,13 @@ bottom:10px;
   }
 
   identificarUsuario();
+
+  minimizarChat.onclick=function(){
+
+    chat.hidden=true;
+    abrirChat.style.display='block';
+
+  };
 
   abrirChat.onclick=function(){
 
