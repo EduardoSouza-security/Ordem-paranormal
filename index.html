@@ -78,6 +78,20 @@ button:focus-visible,.nome:focus-visible,.chat-input:focus-visible{outline:2px s
 .selo.bate{animation:selo .2s 1s cubic-bezier(.5,0,1,1) forwards}
 @keyframes selo{from{opacity:0;transform:rotate(-16deg) scale(2.8)}to{opacity:.85;transform:rotate(-9deg) scale(1)}}
 
+.selo-canto{
+position:fixed;
+left:20px;
+bottom:20px;
+width:110px;
+height:110px;
+z-index:52;
+pointer-events:none;
+transform:rotate(-6deg);
+filter:drop-shadow(0 4px 8px rgba(0,0,0,.6));
+opacity:.88;
+mix-blend-mode:screen;
+}
+
 .chat{
 position:fixed;
 right:20px;
@@ -304,6 +318,13 @@ footer{margin-top:50px;color:#5f584e;font-size:.75rem}
 
 @media(max-width:700px){
 
+.selo-canto{
+left:10px;
+bottom:10px;
+width:80px;
+height:80px;
+}
+
 .chat{
 right:8px;
 bottom:8px;
@@ -458,6 +479,8 @@ bottom:7px;
 </style>
 </head>
 <body>
+
+<img src="selo.jpg" alt="Selo Comunidade Não-Canônico" class="selo-canto">
 
 <div class="wrap">
   <div class="rec"><i></i><span>REC <b id="tc">03:17:42</b></span><span>CAM 03 · SALA DE ARQUIVOS</span></div>
