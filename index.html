@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ordem Paranormal RPG — Arquivo de Agentes</title>
+<link rel="icon" type="image/webp" href="Sangue.webp">
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Cinzel:wght@800&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
 :root{--desk:#0b0909;--paper:#d6cdb8;--paper2:#c4b99f;--ink:#1b1512;--blood:#9c0f17;--blood2:#c9141e;--dim:#8a8173;
@@ -1625,177 +1626,121 @@ bottom:7px;
   add('nex',131,546,34,30,'n','NEX');
   add('perodada',200,547,49,31,'n','PE por rodada');
   add('desl',320,550,110,24,'t','Deslocamento');
-  add('pv',111,603,52,41,'n','PV atuais');
-  add('pe',283,603,52,41,'n','PE atuais');
-  add('defesa',110,716,40,28,'n','Defesa');
-  add('def_equip',232,733,28,18,'s','Defesa equipamento');
-  add('def_outros',264,733,28,18,'s','Defesa outros');
-  add('san',320,699,52,42,'n','Sanidade atual');
-  add('protecao',158,772,272,20,'t','Proteção');
-  add('resistencias',178,794,252,20,'t','Resistências');
+  add('defesa',474,550,86,24,'n','Defesa');
+  add('bloqueio',602,550,86,24,'n','Bloqueio');
+  add('esquiva',474,594,86,24,'n','Esquiva');
+  add('resistencia',602,594,86,24,'n','Resistência');
+  add('pv',131,634,84,30,'n','PV');
+  add('pve',241,634,84,30,'n','PV temporários');
+  add('pe',358,634,84,30,'n','PE');
+  add('san',474,634,84,30,'n','SAN');
+  add('defesa2',602,634,86,24,'n','Defesa');
+  add('ataque',98,700,220,24,'t','Ataques');
+  add('dano',334,700,94,24,'t','Dano');
+  add('critico',474,700,86,24,'t','Crítico');
+  add('alcance',602,700,86,24,'t','Alcance');
+  add('pericia1',98,760,200,24,'t','Perícias');
+  add('pericia2',334,760,94,24,'n','Bônus');
+  add('pericia3',474,760,86,24,'n','Bônus');
+  add('pericia4',602,760,86,24,'n','Bônus');
+  add('inventario',98,820,590,90,'w','Inventário');
+  add('habilidades',98,925,590,60,'w','Habilidades e poderes');
 
-  var P=['Acrobacia','Adestramento','Artes','Atletismo','Atualidades','Ciências','Crime','Diplomacia','Enganação','Fortitude','Furtividade','Iniciativa','Intimidação','Intuição','Investigação','Luta','Medicina','Ocultismo','Percepção','Pilotagem','Pontaria','Profissão','Reflexos','Religião','Sobrevivência','Tática','Tecnologia','Vontade'];
-  var dy=(791-207)/27;
+  var cache={};
 
-  P.forEach(function(nome,i){
-    var y=Math.round(207+i*dy-9);
-    add('p'+i+'_b',632,y,26,18,'s',nome+' bônus');
-    add('p'+i+'_t',666,y,26,18,'w',nome+' treino');
-    add('p'+i+'_o',698,y,32,18,'s',nome+' outros');
-  });
-
-  add('prof_nome',527,Math.round(207+21*dy-9),52,18,'p','Nome da profissão');
-
-  for(var r=0;r<5;r++){
-    var ly=Math.round(878+r*21.4)-21;
-    add('a'+r+'_n',96,ly,220,20,'t','Ataque '+(r+1));
-    add('a'+r+'_t',324,ly,74,20,'t','Teste do ataque '+(r+1));
-    add('a'+r+'_d',407,ly,88,20,'t','Dano do ataque '+(r+1));
-    add('a'+r+'_c',505,ly,224,20,'t','Crítico, alcance e especial do ataque '+(r+1));
+  function escala(){
+    var w=Math.min(920,Math.max(640,rolagem.clientWidth-32));
+    var u=w/REF_W;
+    folha.style.width=w+'px';
+    folha.style.setProperty('--u',u);
+    return u;
   }
 
-  var MAXLEN={t:60,a:2,n:4,s:4,w:4,p:14};
-  var inputs={};
-  var dados={};
-  var atual=null;
-  var pend={};
-  var pendId=null;
-  var timer=null;
-
-  function msg(t){
-    status.textContent=t||'';
+  function campo(c){
+    var el=document.createElement('input');
+    el.className='fc fc-'+c.t;
+    el.dataset.k=c.k;
+    el.setAttribute('aria-label',c.l);
+    el.type=c.t==='n'?'number':'text';
+    el.placeholder=c.l;
+    el.value=cache[c.k]||'';
+    el.style.left=(c.x/REF_W*100)+'%';
+    el.style.top=(c.y/REF_H*100)+'%';
+    el.style.width=(c.w/REF_W*100)+'%';
+    el.style.height=(c.h/REF_H*100)+'%';
+    return el;
   }
 
-  C.forEach(function(c){
-    var inp=document.createElement('input');
-
-    inp.type='text';
-    inp.className='fc fc-'+c.t;
-    inp.dataset.k=c.k;
-    inp.maxLength=MAXLEN[c.t];
-    inp.autocomplete='off';
-    inp.spellcheck=false;
-    inp.setAttribute('aria-label',c.l);
-    inp.title=c.l;
-
-    if(c.t==='w')inp.placeholder='0';
-
-    inp.style.left=(c.x/REF_W*100)+'%';
-    inp.style.top=(c.y/REF_H*100)+'%';
-    inp.style.width=(c.w/REF_W*100)+'%';
-    inp.style.height=(c.h/REF_H*100)+'%';
-
-    inp.addEventListener('input',function(){
-      if(!atual)return;
-
-      pendId=atual;
-      pend[c.k]=inp.value;
-
-      if(!dados[atual])dados[atual]={};
-      dados[atual][c.k]=inp.value;
-
-      msg('Digitando...');
-      clearTimeout(timer);
-      timer=setTimeout(flush,700);
+  function montarCampos(){
+    folha.querySelectorAll('.fc').forEach(function(el){el.remove()});
+    C.forEach(function(c){
+      folha.appendChild(campo(c));
     });
+  }
 
-    inp.addEventListener('blur',function(){
-      if(timer)flush();
+  function salvarCampos(id){
+    var dados={};
+    folha.querySelectorAll('.fc').forEach(function(el){
+      dados[el.dataset.k]=el.value;
     });
-
-    inputs[c.k]=inp;
-    folha.appendChild(inp);
-  });
-
-  function flush(){
-    clearTimeout(timer);
-    timer=null;
-
-    if(!pendId||!Object.keys(pend).length)return;
-
-    var id=pendId;
-    var p=pend;
-
-    pend={};
-    msg('Salvando...');
 
     fichasRef.doc(id).set({
-      v:p,
+      campos:dados,
       atualizado:firebase.firestore.FieldValue.serverTimestamp()
-    },{merge:true}).then(function(){
-      msg('Ficha salva');
-      setTimeout(function(){if(status.textContent==='Ficha salva')msg('');},1500);
-    }).catch(function(){
-      msg('Não foi possível salvar.');
+    },{merge:true});
+  }
+
+  function abrirFicha(id,nome){
+    var ref=fichasRef.doc(id);
+    titulo.textContent=nome||'Ficha';
+    status.textContent='';
+
+    ref.get().then(function(doc){
+      var dados=doc.exists?doc.data():{};
+      cache=dados.campos||{};
+      montarCampos();
+
+      folha.querySelectorAll('.fc').forEach(function(el){
+        el.addEventListener('input',function(){
+          cache[el.dataset.k]=el.value;
+          status.textContent='Salvando...';
+          clearTimeout(el._timer);
+          el._timer=setTimeout(function(){
+            salvarCampos(id);
+            status.textContent='Registro salvo';
+            setTimeout(function(){
+              if(status.textContent==='Registro salvo')status.textContent='';
+            },1200);
+          },500);
+        });
+      });
+
+      fm.hidden=false;
+      document.body.style.overflow='hidden';
+      escala();
     });
   }
 
-  function preencher(forcar){
-    var v=(atual&&dados[atual])||{};
+  window.abrirFicha=abrirFicha;
 
-    Object.keys(inputs).forEach(function(k){
-      var inp=inputs[k];
-      var val=v[k]||'';
-
-      if(!forcar&&document.activeElement===inp)return;
-
-      if(inp.value!==val)inp.value=val;
-    });
-  }
-
-  function ajustar(){
-    var w=folha.clientWidth;
-    if(w)folha.style.setProperty('--u',w/REF_W);
-  }
-
-  if(window.ResizeObserver){
-    new ResizeObserver(ajustar).observe(folha);
-  }
-  addEventListener('resize',ajustar);
-
-  window.abrirFicha=function(id,nome){
-    atual=id;
-    titulo.textContent='Ficha · '+(nome||'Agente');
-    msg('');
-    preencher(true);
-    fm.hidden=false;
-    document.body.style.overflow='hidden';
-    ajustar();
-    rolagem.scrollTop=0;
+  document.getElementById('fmFechar').onclick=function(){
+    fm.hidden=true;
+    document.body.style.overflow='';
   };
 
-  function fechar(){
-    flush();
-    fm.hidden=true;
-    atual=null;
-    document.body.style.overflow='';
-  }
-
-  document.getElementById('fmFechar').onclick=fechar;
-
-  rolagem.addEventListener('click',function(e){
-    if(e.target===rolagem)fechar();
-  });
-
-  document.addEventListener('keydown',function(e){
-    if(e.key==='Escape'&&!fm.hidden)fechar();
-  });
-
-  fichasRef.onSnapshot(function(snap){
-    snap.forEach(function(doc){
-      dados[doc.id]=doc.data().v||{};
-      if(doc.id===atual)preencher(false);
-    });
-  });
+  window.addEventListener('resize',escala);
 })();
 </script>
 
 <script>
-document.getElementById('sair').onclick=function(){
-  if(confirm('Sair da sala?')){
+(function(){
+  var btn=document.getElementById('sair');
+  if(!btn)return;
+
+  btn.onclick=function(){
     location.href='index2.html';
-  }
-};
+  };
+})();
 </script>
 
 </body>
