@@ -430,6 +430,8 @@ bottom:7px;
 .bg-tarja{display:inline-block;width:70px;height:.8em;background:#000;vertical-align:middle}
 .bg-vazio{color:var(--dim);text-align:center;padding:40px 10px}
 @media(max-width:520px){.bg-lista{grid-template-columns:1fr}.bg-card::after{font-size:1.8rem}}
+.sair{background:transparent;color:#a89f8f;border:2px solid #3a2226;padding:11px 20px;font-size:.85rem}
+.sair:hover{background:#1a0d0f;border-color:var(--blood);color:#fff}
 </style>
 </head>
 <body>
@@ -456,6 +458,7 @@ bottom:7px;
     <div style="display:flex;gap:10px;flex-wrap:wrap">
       <button class="convite" id="convite" type="button">Convidar</button>
       <button class="novo" id="novo" type="button">+ Novo espaço</button>
+      <button class="sair" id="sair" type="button">Sair da sala</button>
     </div>
   </div>
 
@@ -554,11 +557,9 @@ bottom:7px;
       return sala.toUpperCase();
     }
 
-    var nova=gerarSala();
+    location.replace('index2.html');
 
-    history.replaceState(null,'',location.pathname+'?sala='+nova);
-
-    return nova;
+    throw new Error('sem sala');
   }
 
   var sala=obterSala();
@@ -1561,6 +1562,14 @@ bottom:7px;
     });
   });
 })();
+</script>
+
+<script>
+document.getElementById('sair').onclick=function(){
+  if(confirm('Sair da sala?')){
+    location.href='index2.html';
+  }
+};
 </script>
 
 </body>
