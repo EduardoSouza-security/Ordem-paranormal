@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ordem Paranormal RPG — Acesso Restrito</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Cinzel:wght@800&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+:root{--blood:#9c0f17;--blood2:#c9141e;--dim:#8a8173;
+--ruido:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E")}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;min-height:100vh;background:#07050a;color:#d9d2c3;font-family:"Special Elite","Courier New",monospace;line-height:1.55;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom))}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.5;mix-blend-mode:overlay;background-image:var(--ruido)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:49;background:radial-gradient(circle 380px at var(--mx,50%) var(--my,45%),transparent 0,rgba(0,0,0,.45) 50%,rgba(0,0,0,.92) 100%);animation:luz 6s infinite}
+@keyframes luz{0%,100%{opacity:.92}7%{opacity:1}9%{opacity:.6}11%{opacity:.97}52%{opacity:.88}54%{opacity:1}55%{opacity:.62}}
+.nevoa{position:fixed;inset:-20%;pointer-events:none;z-index:0;background:radial-gradient(ellipse 40% 30% at 20% 30%,rgba(120,20,30,.22),transparent 70%),radial-gradient(ellipse 45% 35% at 80% 70%,rgba(70,40,90,.2),transparent 70%);animation:deriva 26s ease-in-out infinite alternate}
+.nevoa.b{background:radial-gradient(ellipse 35% 30% at 70% 25%,rgba(150,150,170,.07),transparent 70%),radial-gradient(ellipse 40% 30% at 25% 80%,rgba(156,15,23,.14),transparent 70%);animation-duration:34s;animation-direction:alternate-reverse}
+@keyframes deriva{from{transform:translate(-4%,2%) scale(1)}to{transform:translate(5%,-3%) scale(1.15)}}
+.ritual{position:fixed;left:50%;top:50%;width:min(130vw,920px);aspect-ratio:1;margin:calc(min(130vw,920px)/-2) 0 0 calc(min(130vw,920px)/-2);color:var(--blood);opacity:.16;z-index:1;pointer-events:none;animation:gira 160s linear infinite}
+.ritual svg{width:100%;height:100%;display:block}
+@keyframes gira{to{transform:rotate(360deg)}}
+.porta{position:relative;z-index:2;width:100%;max-width:470px;background:rgba(9,6,8,.8);border:1px solid #3a1c20;padding:34px 28px 26px;box-shadow:0 0 70px rgba(156,15,23,.18),inset 0 0 40px rgba(0,0,0,.6);animation:surge 1.6s steps(14) both}
+@keyframes surge{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.porta::before,.porta::after{content:"";position:absolute;width:18px;height:18px;border:2px solid var(--blood)}
+.porta::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.porta::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.rec{display:flex;gap:10px;align-items:center;font-size:.68rem;color:var(--dim);letter-spacing:.14em;text-transform:uppercase}
+.rec i{width:8px;height:8px;border-radius:50%;background:var(--blood2);animation:pisca 1.2s steps(1) infinite}
+@keyframes pisca{50%{opacity:0}}
+.orig{margin:20px 0 4px;font-size:.7rem;color:var(--dim);letter-spacing:.16em}
+h1{font-family:"Cinzel",Georgia,serif;font-weight:800;margin:0;font-size:clamp(2rem,9vw,3rem);line-height:.98;letter-spacing:.05em;text-transform:uppercase;color:#e6dfd0;animation:falha 7s infinite}
+h1 span{display:block;color:var(--blood2);transform:skewX(-8deg);transform-origin:left}
+@keyframes falha{0%,93%,100%{text-shadow:none;transform:none}94%{text-shadow:3px 0 var(--blood2),-3px 0 #2a3a6a;transform:translateX(2px)}96%{text-shadow:-3px 0 var(--blood2),3px 0 #2a3a6a;transform:translateX(-2px)}98%{text-shadow:none;transform:none}}
+.aviso{margin:16px 0 24px;font-size:.84rem;color:#bdb5a4}
+.bloco{border-top:1px solid #2c1b1e;padding-top:20px}
+.rot{display:block;font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+button{font-family:"Cinzel",Georgia,serif;font-weight:800;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border:0;transition:background .2s,color .2s,border-color .2s}
+button:focus-visible,input:focus-visible{outline:2px solid var(--blood2);outline-offset:3px}
+button:disabled{opacity:.5;cursor:wait}
+.btn{width:100%;padding:14px 10px;font-size:.84rem;background:var(--blood);color:#fff}
+.btn:hover:not(:disabled){background:var(--blood2)}
+.btn.vazado{background:transparent;color:#d9d2c3;border:2px dashed #5a2226}
+.btn.vazado:hover:not(:disabled){background:var(--blood);border-style:solid;border-color:var(--blood)}
+.sep{display:flex;align-items:center;gap:12px;margin:22px 0;color:#4d3a3d;font-size:.9rem}
+.sep::before,.sep::after{content:"";flex:1;height:1px;background:#2c1b1e}
+.codigo{width:100%;margin-bottom:12px;background:rgba(0,0,0,.45);border:0;border-bottom:2px solid #5a2226;color:#e6dfd0;font-family:"Special Elite","Courier New",monospace;font-size:1.7rem;letter-spacing:.5em;text-indent:.5em;text-align:center;text-transform:uppercase;padding:12px 6px}
+.codigo::placeholder{color:#3d3234;letter-spacing:.5em}
+.codigo:focus{border-bottom-color:var(--blood2);outline:none;box-shadow:0 10px 24px -14px rgba(201,20,30,.8)}
+.msg{min-height:1.5em;margin-top:14px;text-align:center;font-size:.76rem;letter-spacing:.06em;color:var(--blood2)}
+.msg.ok{color:#a89f8f}
+.rodape{margin-top:14px;text-align:center;font-size:.64rem;color:#4f4840;letter-spacing:.1em}
+.apagao{position:fixed;inset:0;z-index:80;background:#000;opacity:0;pointer-events:none;transition:opacity .6s}
+body.saindo .apagao{opacity:1}
+body.saindo .porta{animation:none;filter:blur(2px) brightness(1.6)}
+@media(max-width:420px){.porta{padding:28px 18px 22px}.codigo{font-size:1.35rem;letter-spacing:.38em;text-indent:.38em}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="nevoa"></div>
+<div class="nevoa b"></div>
+
+<div class="ritual" aria-hidden="true">
+  <svg viewBox="0 0 500 500" fill="none" stroke="currentColor" stroke-width="1.4">
+    <circle cx="250" cy="250" r="238" stroke-dasharray="2 8"/>
+    <circle cx="250" cy="250" r="225"/>
+    <circle cx="250" cy="250" r="190" stroke-dasharray="14 6"/>
+    <circle cx="250" cy="250" r="100"/>
+    <polygon points="250,60 361.7,403.7 69.3,191.3 430.7,191.3 138.3,403.7"/>
+    <circle cx="250" cy="250" r="22"/>
+    <circle cx="250" cy="250" r="6" fill="currentColor"/>
+  </svg>
+</div>
+
+<main class="porta">
+  <div class="rec"><i></i><span>Terminal 00 · Acesso restrito</span></div>
+
+  <p class="orig">ORDO REALITAS / PORTAL DE ENTRADA</p>
+  <h1>Ordem<span>Paranormal</span></h1>
+
+  <p class="aviso">Algumas portas só abrem para quem sabe o nome certo. Abra uma nova sala ou diga o código para atravessar.</p>
+
+  <div class="bloco">
+    <span class="rot">Nova ocorrência</span>
+    <button class="btn vazado" id="criar" type="button">Criar sala</button>
+  </div>
+
+  <div class="sep">☩</div>
+
+  <form class="bloco" id="formEntrar" autocomplete="off">
+    <label class="rot" for="codigo">Código da sala</label>
+    <input class="codigo" id="codigo" type="text" maxlength="20" placeholder="••••••" autocapitalize="characters" autocorrect="off" spellcheck="false" inputmode="text" aria-label="Código da sala">
+    <button class="btn" id="entrar" type="submit">Entrar na sala</button>
+  </form>
+
+  <div class="msg" id="msg" role="status" aria-live="polite"></div>
+  <div class="rodape">O que o Outro Lado leva nunca volta.</div>
+</main>
+
+<div class="apagao"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+<script>
+(function(){
+
+  firebase.initializeApp({
+    apiKey:"AIzaSyDVK_bXqWr_IpWSAa__fnRgG-rFz1MUsiw",
+    authDomain:"teste1-32b84.firebaseapp.com",
+    projectId:"teste1-32b84",
+    storageBucket:"teste1-32b84.firebasestorage.app",
+    messagingSenderId:"594714086800",
+    appId:"1:594714086800:web:6858f1dcbefb98c379f715",
+    measurementId:"G-H4DGEPGF7W"
+  });
+
+  var db=firebase.firestore();
+  var calmo=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  var criar=document.getElementById('criar');
+  var entrar=document.getElementById('entrar');
+  var form=document.getElementById('formEntrar');
+  var codigo=document.getElementById('codigo');
+  var msg=document.getElementById('msg');
+
+  function aviso(t,ok){
+    msg.textContent=t||'';
+    msg.className='msg'+(ok?' ok':'');
+  }
+
+  function travar(v){
+    criar.disabled=v;
+    entrar.disabled=v;
+  }
+
+  function ir(cod){
+    document.body.classList.add('saindo');
+    setTimeout(function(){
+      location.href='sala.html?sala='+encodeURIComponent(cod);
+    },calmo?0:700);
+  }
+
+  function gerarSala(){
+    var letras='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    var s='';
+    for(var i=0;i<6;i++){
+      s+=letras[Math.floor(Math.random()*letras.length)];
+    }
+    return s;
+  }
+
+  function tentarCriar(restantes){
+    var cod=gerarSala();
+    var ref=db.collection('salas').doc(cod);
+
+    return ref.get().then(function(doc){
+
+      if(doc.exists){
+        if(restantes<=0)throw new Error('colisao');
+        return tentarCriar(restantes-1);
+      }
+
+      return ref.set({
+        criada:firebase.firestore.FieldValue.serverTimestamp(),
+        proximoUsuario:0
+      }).then(function(){
+        return cod;
+      });
+
+    });
+  }
+
+  criar.onclick=function(){
+    travar(true);
+    aviso('Abrindo uma passagem...',true);
+
+    tentarCriar(5).then(function(cod){
+      aviso('Sala '+cod+' aberta.',true);
+      ir(cod);
+    }).catch(function(){
+      aviso('A passagem não abriu. Tente novamente.');
+      travar(false);
+    });
+  };
+
+  codigo.addEventListener('input',function(){
+    codigo.value=codigo.value.replace(/[^A-Za-z0-9]/g,'').toUpperCase();
+    aviso('');
+  });
+
+  form.onsubmit=function(e){
+    e.preventDefault();
+
+    var cod=codigo.value.trim().toUpperCase();
+
+    if(!/^[A-Z0-9]{6,20}$/.test(cod)){
+      aviso('Código inválido. Digite o código da sala.');
+      codigo.focus();
+      return;
+    }
+
+    travar(true);
+    aviso('Verificando...',true);
+
+    db.collection('salas').doc(cod).get().then(function(doc){
+
+      if(!doc.exists){
+        aviso('Nenhuma sala responde a esse código.');
+        travar(false);
+        codigo.focus();
+        return;
+      }
+
+      aviso('Acesso concedido.',true);
+      ir(cod);
+
+    }).catch(function(){
+      aviso('Sem sinal. Tente novamente.');
+      travar(false);
+    });
+  };
+
+  if(!calmo){
+    var root=document.documentElement;
+    var mx=innerWidth/2;
+    var my=innerHeight*.45;
+    var tx=mx;
+    var ty=my;
+    var rodando=false;
+
+    function passo(){
+      mx+=(tx-mx)*.12;
+      my+=(ty-my)*.12;
+      root.style.setProperty('--mx',mx+'px');
+      root.style.setProperty('--my',my+'px');
+
+      if(Math.abs(tx-mx)>.5||Math.abs(ty-my)>.5){
+        requestAnimationFrame(passo);
+      }else{
+        rodando=false;
+      }
+    }
+
+    function mover(e){
+      tx=e.clientX;
+      ty=e.clientY;
+      if(!rodando){
+        rodando=true;
+        requestAnimationFrame(passo);
+      }
+    }
+
+    addEventListener('pointermove',mover);
+    addEventListener('pointerdown',mover);
+  }
+
+  window.addEventListener('pageshow',function(e){
+    if(e.persisted){
+      document.body.classList.remove('saindo');
+      travar(false);
+      aviso('');
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>
