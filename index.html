@@ -432,6 +432,28 @@ bottom:7px;
 @media(max-width:520px){.bg-lista{grid-template-columns:1fr}.bg-card::after{font-size:1.8rem}}
 .sair{background:transparent;color:#a89f8f;border:2px solid #3a2226;padding:11px 20px;font-size:.85rem}
 .sair:hover{background:#1a0d0f;border-color:var(--blood);color:#fff}
+.fichaMini img{object-fit:contain;background:#fff}
+.fm{position:fixed;inset:0;z-index:70;background:rgba(4,3,3,.97);display:flex;flex-direction:column}
+.fm[hidden]{display:none}
+.fm-barra{display:flex;align-items:center;gap:14px;padding:10px 16px;border-bottom:2px solid var(--blood);background:linear-gradient(90deg,#160b0c,#0d0909)}
+.fm-titulo{flex:1;min-width:0;font-family:"Cinzel",Georgia,serif;font-weight:800;font-size:.95rem;letter-spacing:.12em;text-transform:uppercase;color:#e6dfd0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fm-status{font-size:.7rem;color:var(--dim);letter-spacing:.06em;white-space:nowrap}
+.fm-fechar{background:var(--blood);color:#fff;padding:9px 16px;font-size:.75rem}
+.fm-fechar:hover{background:var(--blood2)}
+.fm-rolagem{flex:1;overflow:auto;padding:16px;-webkit-overflow-scrolling:touch}
+.fm-folha{--u:1;position:relative;width:clamp(640px,96vw,920px);margin:0 auto;background:#fff;box-shadow:0 10px 50px rgba(0,0,0,.8)}
+.fm-folha img{display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none}
+.fc{position:absolute;margin:0;border:0;border-radius:2px;background:transparent;color:#0b2a78;font-family:"Special Elite","Courier New",monospace;text-align:center;line-height:1;padding:0 calc(var(--u)*3px);font-size:calc(var(--u)*13px);outline:none}
+.fc:hover{background:rgba(201,20,30,.07)}
+.fc:focus{background:rgba(201,20,30,.13);box-shadow:0 0 0 1px rgba(156,15,23,.75)}
+.fc-t{text-align:left;font-size:calc(var(--u)*14px);padding-left:calc(var(--u)*4px)}
+.fc-a{font-family:"Cinzel",Georgia,serif;font-weight:800;font-size:calc(var(--u)*26px)}
+.fc-n{font-size:calc(var(--u)*22px)}
+.fc-p{font-size:calc(var(--u)*12px)}
+.fc-w{background:#fff;border-bottom:1px solid #777;border-radius:0;font-size:calc(var(--u)*14px)}
+.fc-w:hover{background:#fff2f2}
+.fc-w:focus{background:#ffe9e9}
+.fc-w::placeholder{color:#b5b5b5}
 </style>
 </head>
 <body>
@@ -503,6 +525,19 @@ bottom:7px;
 </section>
 
 <div class="lb" id="lb"><img alt="Imagem ampliada"></div>
+
+<div class="fm" id="fm" hidden>
+  <div class="fm-barra">
+    <span class="fm-titulo" id="fmTitulo">Ficha</span>
+    <span class="fm-status" id="fmStatus"></span>
+    <button class="fm-fechar" id="fmFechar" type="button">Fechar</button>
+  </div>
+  <div class="fm-rolagem" id="fmRolagem">
+    <div class="fm-folha" id="fmFolha">
+      <img src="ficha.webp" alt="Ficha de agente">
+    </div>
+  </div>
+</div>
 
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
@@ -799,12 +834,12 @@ bottom:7px;
 
       '</div>' +
 
-      '<div class="foto">' +
-        '<div class="vazio">'+ico+'Sem ficha anexada</div>' +
+      '<div class="foto fichaMini">' +
+        '<img src="ficha.webp" alt="Ficha de agente" loading="lazy">' +
       '</div>' +
 
       '<div class="rod">' +
-        '<button type="button" class="mostrar">Mostrar ficha</button>' +
+        '<button type="button" class="mostrar">Abrir ficha</button>' +
         '<button type="button" class="x" title="Excluir agente" aria-label="Excluir agente">Excluir agente</button>' +
       '</div>' +
 
@@ -841,10 +876,6 @@ bottom:7px;
 
     if(dados.foto){
       exibirImagem(caixas[0],dados.foto,'Foto');
-    }
-
-    if(dados.ficha){
-      exibirImagem(caixas[1],dados.ficha,'Ficha');
     }
 
     function salvarNome(){
@@ -1056,15 +1087,13 @@ bottom:7px;
       false
     );
 
-    ligar(
-      caixas[1],
-      f.querySelector('.mostrar'),
-      avs[1],
-      'ficha',
-      'Trocar ficha',
-      'Ficha',
-      true
-    );
+    function abrirFichaAgente(){
+      if(window.abrirFicha)window.abrirFicha(id,nome.value);
+    }
+
+    f.querySelector('.mostrar').onclick=abrirFichaAgente;
+    caixas[1].style.cursor='pointer';
+    caixas[1].addEventListener('click',abrirFichaAgente);
 
     f.querySelector('.x').onclick=function(){
 
@@ -1559,6 +1588,203 @@ bottom:7px;
       if(c&&document.activeElement!==c.ta&&c.ta.value!==t){
         c.ta.value=t;
       }
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var sala=(new URLSearchParams(location.search).get('sala')||'').toUpperCase();
+  if(!sala)return;
+
+  var db=firebase.firestore();
+  var fichasRef=db.collection('salas').doc(sala).collection('fichas');
+
+  var REF_W=768;
+  var REF_H=1024;
+
+  var fm=document.getElementById('fm');
+  var rolagem=document.getElementById('fmRolagem');
+  var folha=document.getElementById('fmFolha');
+  var titulo=document.getElementById('fmTitulo');
+  var status=document.getElementById('fmStatus');
+
+  var C=[];
+  function add(k,x,y,w,h,t,l){C.push({k:k,x:x,y:y,w:w,h:h,t:t,l:l});}
+
+  add('personagem',98,40,208,24,'t','Nome do personagem');
+  add('jogador',334,40,94,24,'t','Jogador');
+  add('agi',238,136,40,32,'a','Agilidade');
+  add('for',135,210,40,32,'a','Força');
+  add('int',358,210,40,32,'a','Intelecto');
+  add('pre',173,334,40,32,'a','Presença');
+  add('vig',320,334,40,32,'a','Vigor');
+  add('origem',182,451,246,25,'t','Origem');
+  add('classe',170,500,258,25,'t','Classe');
+  add('nex',131,546,34,30,'n','NEX');
+  add('perodada',200,547,49,31,'n','PE por rodada');
+  add('desl',320,550,110,24,'t','Deslocamento');
+  add('pv',111,603,52,41,'n','PV atuais');
+  add('pe',283,603,52,41,'n','PE atuais');
+  add('defesa',110,716,40,28,'n','Defesa');
+  add('def_equip',232,733,28,18,'s','Defesa equipamento');
+  add('def_outros',264,733,28,18,'s','Defesa outros');
+  add('san',320,699,52,42,'n','Sanidade atual');
+  add('protecao',158,772,272,20,'t','Proteção');
+  add('resistencias',178,794,252,20,'t','Resistências');
+
+  var P=['Acrobacia','Adestramento','Artes','Atletismo','Atualidades','Ciências','Crime','Diplomacia','Enganação','Fortitude','Furtividade','Iniciativa','Intimidação','Intuição','Investigação','Luta','Medicina','Ocultismo','Percepção','Pilotagem','Pontaria','Profissão','Reflexos','Religião','Sobrevivência','Tática','Tecnologia','Vontade'];
+  var dy=(791-207)/27;
+
+  P.forEach(function(nome,i){
+    var y=Math.round(207+i*dy-9);
+    add('p'+i+'_b',632,y,26,18,'s',nome+' bônus');
+    add('p'+i+'_t',666,y,26,18,'w',nome+' treino');
+    add('p'+i+'_o',698,y,32,18,'s',nome+' outros');
+  });
+
+  add('prof_nome',527,Math.round(207+21*dy-9),52,18,'p','Nome da profissão');
+
+  for(var r=0;r<5;r++){
+    var ly=Math.round(878+r*21.4)-21;
+    add('a'+r+'_n',96,ly,220,20,'t','Ataque '+(r+1));
+    add('a'+r+'_t',324,ly,74,20,'t','Teste do ataque '+(r+1));
+    add('a'+r+'_d',407,ly,88,20,'t','Dano do ataque '+(r+1));
+    add('a'+r+'_c',505,ly,224,20,'t','Crítico, alcance e especial do ataque '+(r+1));
+  }
+
+  var MAXLEN={t:60,a:2,n:4,s:4,w:4,p:14};
+  var inputs={};
+  var dados={};
+  var atual=null;
+  var pend={};
+  var pendId=null;
+  var timer=null;
+
+  function msg(t){
+    status.textContent=t||'';
+  }
+
+  C.forEach(function(c){
+    var inp=document.createElement('input');
+
+    inp.type='text';
+    inp.className='fc fc-'+c.t;
+    inp.dataset.k=c.k;
+    inp.maxLength=MAXLEN[c.t];
+    inp.autocomplete='off';
+    inp.spellcheck=false;
+    inp.setAttribute('aria-label',c.l);
+    inp.title=c.l;
+
+    if(c.t==='w')inp.placeholder='0';
+
+    inp.style.left=(c.x/REF_W*100)+'%';
+    inp.style.top=(c.y/REF_H*100)+'%';
+    inp.style.width=(c.w/REF_W*100)+'%';
+    inp.style.height=(c.h/REF_H*100)+'%';
+
+    inp.addEventListener('input',function(){
+      if(!atual)return;
+
+      pendId=atual;
+      pend[c.k]=inp.value;
+
+      if(!dados[atual])dados[atual]={};
+      dados[atual][c.k]=inp.value;
+
+      msg('Digitando...');
+      clearTimeout(timer);
+      timer=setTimeout(flush,700);
+    });
+
+    inp.addEventListener('blur',function(){
+      if(timer)flush();
+    });
+
+    inputs[c.k]=inp;
+    folha.appendChild(inp);
+  });
+
+  function flush(){
+    clearTimeout(timer);
+    timer=null;
+
+    if(!pendId||!Object.keys(pend).length)return;
+
+    var id=pendId;
+    var p=pend;
+
+    pend={};
+    msg('Salvando...');
+
+    fichasRef.doc(id).set({
+      v:p,
+      atualizado:firebase.firestore.FieldValue.serverTimestamp()
+    },{merge:true}).then(function(){
+      msg('Ficha salva');
+      setTimeout(function(){if(status.textContent==='Ficha salva')msg('');},1500);
+    }).catch(function(){
+      msg('Não foi possível salvar.');
+    });
+  }
+
+  function preencher(forcar){
+    var v=(atual&&dados[atual])||{};
+
+    Object.keys(inputs).forEach(function(k){
+      var inp=inputs[k];
+      var val=v[k]||'';
+
+      if(!forcar&&document.activeElement===inp)return;
+
+      if(inp.value!==val)inp.value=val;
+    });
+  }
+
+  function ajustar(){
+    var w=folha.clientWidth;
+    if(w)folha.style.setProperty('--u',w/REF_W);
+  }
+
+  if(window.ResizeObserver){
+    new ResizeObserver(ajustar).observe(folha);
+  }
+  addEventListener('resize',ajustar);
+
+  window.abrirFicha=function(id,nome){
+    atual=id;
+    titulo.textContent='Ficha · '+(nome||'Agente');
+    msg('');
+    preencher(true);
+    fm.hidden=false;
+    document.body.style.overflow='hidden';
+    ajustar();
+    rolagem.scrollTop=0;
+  };
+
+  function fechar(){
+    flush();
+    fm.hidden=true;
+    atual=null;
+    document.body.style.overflow='';
+  }
+
+  document.getElementById('fmFechar').onclick=fechar;
+
+  rolagem.addEventListener('click',function(e){
+    if(e.target===rolagem)fechar();
+  });
+
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!fm.hidden)fechar();
+  });
+
+  fichasRef.onSnapshot(function(snap){
+    snap.forEach(function(doc){
+      dados[doc.id]=doc.data().v||{};
+      if(doc.id===atual)preencher(false);
     });
   });
 })();
