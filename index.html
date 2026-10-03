@@ -408,19 +408,28 @@ bottom:7px;
 .aba{background:transparent;color:var(--dim);padding:10px 18px;font-size:.8rem;border-bottom:3px solid transparent;margin-bottom:-1px}
 .aba:hover{color:#fff}
 .aba.on{color:#fff;border-bottom-color:var(--blood2)}
-.bg-lista{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:26px}
-.bg-card{background:linear-gradient(180deg,var(--paper),var(--paper2));color:var(--ink);padding:16px;display:flex;gap:14px;align-items:flex-start;clip-path:polygon(0 1%,3% 0,97% 1%,100% 0,99% 98%,100% 100%,2% 99%,0 100%)}
-.bg-foto{width:110px;flex:none;aspect-ratio:3/4;background:#151010;border:2px solid #f1ebdc;outline:1px solid #3a2e28;box-shadow:0 3px 6px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.bg-foto img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
-.bg-foto .vazio{font-size:.6rem;padding:6px}
-.bg-foto .vazio svg{width:24px;height:24px}
-.bg-corpo{flex:1;min-width:0;display:flex;flex-direction:column}
-.bg-nome{font-family:"Permanent Marker",cursive;font-size:1.2rem;border-bottom:1px dashed #6b5d4c;padding-bottom:4px;margin-bottom:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bg-texto{width:100%;min-height:170px;resize:vertical;background:rgba(255,255,255,.28);border:1px solid #8b7e6c;color:var(--ink);font-family:"Special Elite","Courier New",monospace;font-size:.82rem;line-height:1.45;padding:9px}
+.bg-lista{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:36px 28px}
+.bg-card{position:relative;background:linear-gradient(180deg,var(--paper),var(--paper2));color:var(--ink);padding:30px 22px 16px 26px;display:flex;flex-direction:column;gap:14px;clip-path:polygon(0 1%,3% 0,97% 1%,100% 0,99% 98%,100% 100%,2% 99%,0 100%);box-shadow:inset 0 0 60px rgba(90,60,30,.18)}
+.bg-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:10px;background:repeating-linear-gradient(180deg,transparent 0 22px,rgba(27,21,18,.55) 22px 30px,transparent 30px 52px)}
+.bg-card::after{content:"ORDO REALITAS";position:absolute;left:50%;top:52%;transform:translate(-50%,-50%) rotate(-24deg);font-family:"Cinzel",Georgia,serif;font-weight:800;font-size:2.6rem;letter-spacing:.2em;color:rgba(27,21,18,.05);white-space:nowrap;pointer-events:none}
+.bg-clipe{position:absolute;top:-4px;right:34px;width:18px;height:54px;border:3px solid #6e6a63;border-radius:9px 9px 8px 8px;transform:rotate(4deg);z-index:2}
+.bg-clipe::after{content:"";position:absolute;left:3px;top:10px;width:6px;height:36px;border:3px solid #6e6a63;border-top:0;border-radius:0 0 6px 6px}
+.bg-cab{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;border-bottom:3px double #3a2e28;padding-bottom:8px;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#4a3d33}
+.bg-cab b{font-family:"Cinzel",Georgia,serif;font-weight:800;font-size:.95rem;letter-spacing:.12em;color:var(--blood)}
+.bg-campo{position:relative}
+.bg-campo label{display:block;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:#6b5d4c;margin-bottom:3px}
+.bg-nome{font-family:"Permanent Marker",cursive;font-size:1.35rem;line-height:1.2;border:1px solid #8b7e6c;background:rgba(255,255,255,.22);padding:6px 10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bg-pauta{position:relative}
+.bg-pauta::before{content:"";position:absolute;left:34px;top:0;bottom:0;width:2px;background:rgba(156,15,23,.55);pointer-events:none}
+.bg-texto{display:block;width:100%;min-height:224px;resize:vertical;border:1px solid #8b7e6c;color:#1d2a44;font-family:"Special Elite","Courier New",monospace;font-size:.84rem;line-height:28px;padding:0 10px 0 46px;background-color:rgba(255,255,250,.35);background-image:repeating-linear-gradient(180deg,transparent 0 27px,rgba(70,90,130,.38) 27px 28px);background-attachment:local}
+.bg-texto::placeholder{color:#7d746a}
 .bg-texto:focus-visible{outline:2px solid var(--blood2);outline-offset:2px}
-.bg-status{min-height:1.2em;font-size:.68rem;color:var(--blood);margin-top:4px}
+.bg-rod{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px dashed #6b5d4c;padding-top:8px;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#6b5d4c}
+.bg-status{min-height:1.2em;color:var(--blood);letter-spacing:.06em}
+.bg-selo{position:absolute;top:44px;right:22px;font-family:"Permanent Marker",cursive;color:var(--blood);border:3px solid var(--blood);padding:1px 10px;font-size:.95rem;text-transform:uppercase;transform:rotate(8deg);opacity:.8;mix-blend-mode:multiply;pointer-events:none}
+.bg-tarja{display:inline-block;width:70px;height:.8em;background:#000;vertical-align:middle}
 .bg-vazio{color:var(--dim);text-align:center;padding:40px 10px}
-@media(max-width:520px){.bg-lista{grid-template-columns:1fr}.bg-card{flex-direction:column}.bg-foto{width:100px}}
+@media(max-width:520px){.bg-lista{grid-template-columns:1fr}.bg-card::after{font-size:1.8rem}}
 </style>
 </head>
 <body>
@@ -1449,9 +1458,6 @@ bottom:7px;
   var painel=document.getElementById('painelBg');
   var lista=document.getElementById('bgLista');
   var vazio=document.getElementById('bgVazio');
-  var lb=document.getElementById('lb');
-  var lbi=lb.querySelector('img');
-  var ico='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18"/><circle cx="9" cy="9" r="1.8"/><path d="M21 16l-5-5-8 8"/></svg>';
 
   var cards={};
   var textos={};
@@ -1469,20 +1475,21 @@ bottom:7px;
     var el=document.createElement('article');
     el.className='bg-card';
     el.innerHTML=
-      '<div class="bg-foto"><div class="vazio">'+ico+'Sem foto 3x4</div></div>'+
-      '<div class="bg-corpo">'+
-        '<div class="bg-nome"></div>'+
-        '<textarea class="bg-texto" maxlength="5000" placeholder="Escreva o background e os detalhes do personagem..." aria-label="Background do personagem"></textarea>'+
-        '<div class="bg-status"></div>'+
-      '</div>';
+      '<span class="bg-clipe"></span>'+
+      '<div class="bg-cab"><span>Ordo Realitas · Dossiê de agente</span><b class="bg-num">Nº 000</b></div>'+
+      '<div class="bg-campo"><label>Nome do agente</label><div class="bg-nome"></div></div>'+
+      '<div class="bg-campo"><label>Histórico · observações · detalhes</label>'+
+        '<div class="bg-pauta"><textarea class="bg-texto" maxlength="5000" placeholder="Registre aqui o histórico, origem, traços e detalhes do agente..." aria-label="Histórico do agente"></textarea></div>'+
+      '</div>'+
+      '<div class="bg-rod"><span class="bg-status"></span><span>Acesso restrito · <span class="bg-tarja"></span></span></div>'+
+      '<span class="bg-selo">Confidencial</span>';
 
     var c={
       el:el,
-      foto:el.querySelector('.bg-foto'),
+      num:el.querySelector('.bg-num'),
       nome:el.querySelector('.bg-nome'),
       ta:el.querySelector('.bg-texto'),
       st:el.querySelector('.bg-status'),
-      url:null,
       timer:null
     };
 
@@ -1496,8 +1503,8 @@ bottom:7px;
         texto:c.ta.value,
         atualizado:firebase.firestore.FieldValue.serverTimestamp()
       },{merge:true}).then(function(){
-        c.st.textContent='Salvo';
-        setTimeout(function(){if(c.st.textContent==='Salvo')c.st.textContent='';},1500);
+        c.st.textContent='Registro salvo';
+        setTimeout(function(){if(c.st.textContent==='Registro salvo')c.st.textContent='';},1500);
       }).catch(function(){
         c.st.textContent='Não foi possível salvar.';
       });
@@ -1519,27 +1526,18 @@ bottom:7px;
 
   agentesRef.orderBy('criado').onSnapshot(function(snap){
     var ativos={};
+    var i=0;
 
     snap.forEach(function(doc){
       var d=doc.data();
       var id=doc.id;
       ativos[id]=true;
+      i++;
 
       var c=cards[id]||criarCard(id);
       c.nome.textContent=d.nome||'Agente';
-
-      if(d.foto&&d.foto!==c.url){
-        c.url=d.foto;
-        var im=new Image();
-        im.alt='Foto de '+(d.nome||'agente');
-        im.src=d.foto;
-        im.onclick=function(){lbi.src=d.foto;lb.classList.add('on');};
-        c.foto.innerHTML='';
-        c.foto.appendChild(im);
-      }else if(!d.foto&&c.url){
-        c.url=null;
-        c.foto.innerHTML='<div class="vazio">'+ico+'Sem foto 3x4</div>';
-      }
+      c.num.textContent='Nº '+String(i).padStart(3,'0');
+      lista.appendChild(c.el);
     });
 
     Object.keys(cards).forEach(function(id){
